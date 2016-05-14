@@ -2,6 +2,15 @@
 
 Handle data-arrays and key/value pairs in a fluent way. Ideal for abstracting session access.
 
+## Installation
+
+Available through PHP composer
+
+```
+composer require rasmuscnielsen/datastore
+```
+
+
 ## Examples
 
 ```
