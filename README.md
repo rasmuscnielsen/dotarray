@@ -1,22 +1,24 @@
-# Datastore
+# DotArray
 
-Handle data-arrays and key/value pairs in a fluent way. Ideal for abstracting session access.
+Handle data-arrays and key/value pairs in a fluent way by enabling dot-notation.
 
 ## Installation
 
 Available through PHP composer
 
 ```
-composer require rasmuscnielsen/datastore
+composer require rasmuscnielsen/dotarray
 ```
 
 
 ## Examples
 
 ```
-$datastore = Datastore::root('showroom');
+$yourArray = array();
 
-$mercedes = $datastore->open('cars.mercedes');
+$dotArray = DotArray::init($yourArray);
+
+$mercedes = $dotArray->open('cars.mercedes');
 
 $mercedes->write([
   'model' => 'S-class', 
@@ -29,5 +31,5 @@ $mercedes->write('colour', 'blue');
 
 $mercedes->delete('origin');
 
-var_dump($datastore->read('cars.mercedes')); // Now containts model, passengers, colour
+var_dump($dotArray->read('cars.mercedes')); // Now contains model, passengers, colour
 ```

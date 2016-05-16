@@ -1,14 +1,10 @@
 <?php
 
-namespace Datastore;
+namespace DotArray;
 
 
-class Datastore {
-//
-//    /**
-//     * @var
-//     */
-//    private static $driver = false;
+class DotArray
+{
 
     /**
      * @var
@@ -24,6 +20,7 @@ class Datastore {
         $this->pointer = &$pointer;
     }
 
+
     /**
      * @param $name
      * @param $args
@@ -34,33 +31,25 @@ class Datastore {
         return $this->open($name);
     }
 
-    /* __________________________________________________________________________________ */
-
-//    /**
-//     * @param $pointer
-//     */
-//    public static function setDriver(&$pointer)
-//    {
-//        self::$driver = $pointer;
-//    }
-
 
     /**
      * @param $name
      * @return static
      */
-    public static function root($name)
+    public function __get($name)
     {
-//        $driver = &self::$driver;
-//
-//        if($driver === false)
-//        {
-//            $driver = &$_SESSION;
-//        }
-//
-//        $driver[$name] = null;
+        return $this->open($name);
+    }
 
-        return new static( $_SESSION[$name] );
+    /* __________________________________________________________________________________ */
+
+    /**
+     * @param $memory
+     * @return static
+     */
+    public static function init(&$memory)
+    {
+        return new static($memory);
     }
 
     /* __________________________________________________________________________________ */
@@ -104,18 +93,18 @@ class Datastore {
     {
         $paths = explode('.', $dotPath);
 
-        $datastore = $this;
+        $dotArray = $this;
 
         // Navigate through path
         foreach($paths as $path)
         {
-            $datastore = $datastore->open($path, $createIfNotExists);
+            $dotArray = $dotArray->open($path, $createIfNotExists);
 
             // Null can be return if requested not to create property
-            if(is_null($datastore)) { return null; }
+            if(is_null($dotArray)) { return null; }
         }
 
-        return $datastore;
+        return $dotArray;
     }
 
 
@@ -147,12 +136,12 @@ class Datastore {
         // A dot-path was given
         else
         {
-            // Parse dot-path and open a datastore for the path. Do not auto-create
-            $datastore = $this->open($path, false);
+            // Parse dot-path and open a dotArray for the path. Do not auto-create
+            $dotArray = $this->open($path, false);
 
-            if(!is_null($datastore)) // Path existed
+            if(!is_null($dotArray)) // Path existed
             {
-                return $datastore->read($property, $default);
+                return $dotArray->read($property, $default);
             }
         }
 
@@ -175,10 +164,10 @@ class Datastore {
         // Also the key can be null
         if (is_null($key)) { return $array = $value; }
 
-        // Parse dot-path and open a datastore for the path
-        $datastore = $this->open($key);
+        // Parse dot-path and open a dotArray for the path
+        $dotArray = $this->open($key);
 
-        return $datastore->write($value);
+        return $dotArray->write($value);
     }
 
 

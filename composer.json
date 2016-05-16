@@ -12,8 +12,8 @@
     },
 	"autoload": {
 		"psr-4": {
-	    	"Datastore\\": "src/",
-	     	"Datastore\\Tests\\": "tests/"
+	    	"DotArray\\": "src/",
+	     	"DotArray\\Tests\\": "tests/"
 	    }
 	}
 }

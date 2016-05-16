@@ -1,6 +1,7 @@
 <?php
 
-namespace Datastore\Tests;
+namespace DotArray\Tests;
+
 
 /**
  * Class TestCase
@@ -10,22 +11,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var
-     */
-    protected $driver;
-
-    /**
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $_SESSION = array();
-
-        $this->driver = &$_SESSION;
-    }
-
-    /**
      * @param $value
      */
     public function dd($value)
@@ -33,4 +18,5 @@ class TestCase extends \PHPUnit_Framework_TestCase
         var_dump($value);
         exit;
     }
+
 }
