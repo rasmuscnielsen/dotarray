@@ -218,6 +218,18 @@ class DotArray
 
     /**
      * @param $key
+     * @return $this
+     */
+    public function truncate($key)
+    {
+        $this->pointer[$key] = array();
+
+        return $this;
+    }
+
+
+    /**
+     * @param $key
      * @return bool
      */
     public function delete($key)
