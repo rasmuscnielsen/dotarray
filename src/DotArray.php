@@ -220,9 +220,9 @@ class DotArray
      * @param $key
      * @return $this
      */
-    public function truncate($key)
+    public function truncate($key=null)
     {
-        $this->pointer[$key] = array();
+        $this->open($key)->write(array());
 
         return $this;
     }
