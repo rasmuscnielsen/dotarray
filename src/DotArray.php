@@ -38,7 +38,7 @@ class DotArray
      */
     public function __get($name)
     {
-        return $this->open($name);
+        return $this->read($name);
     }
 
     /* __________________________________________________________________________________ */
