@@ -13,23 +13,50 @@ composer require rasmuscnielsen/dotarray
 
 ## Examples
 
+Instantiate DotArray on a source
 ```
-$yourArray = array();
+$source = array();
+$dotArray = DotArray::tap($source);
+```
 
-$dotArray = DotArray::init($yourArray);
+Now start interacting with your source through DotArray
+```
+$cars = $dotArray->open('garage.cars');
 
-$mercedes = $dotArray->open('cars.mercedes');
-
-$mercedes->write([
+$cars->put('mercedes', [
   'model' => 'S-class', 
-  'origin' => 'germany'
+  'origin' => 'Germany',
+  'wheelsize' => '22 inches'
+]);
+$cars->add('mercedes', [
+    'color' => 'blue'
 ]);
 
-$mercedes->append(['passengers' => 4]);
+// you could even...
+$dotArray->put('garage.cars.mercedes.color', 'blueish');
 
-$mercedes->write('colour', 'blue');
+// or to delete
+$garage->open('mercedes')->delete('origin');
+```
 
-$mercedes->delete('origin');
+Finally you can read out the values in a variety of ways
+```
+echo $dotArray->get('garage.cars.mercedes.model'); // S-class
+echo $dotArray->get('garage.cars.merecedes.origin'); // NULL
+echo $dotArray->get('garage.cars.mercedes.maxspeed', '250km/t'); // 250km/t
 
-var_dump($dotArray->read('cars.mercedes')); // Now contains model, passengers, colour
+// or search out your object
+$mercedes = $dotArray->open('garage.cars.mercedes');
+echo $dotArray->wheelsize; // 22-inches
+
+// of course you have the whole thing in your souce 
+print_r($source); 
+
+// [
+//	'garage' => [
+//    	'cars' => [
+//        	'merecedes' => [
+//				'model' => 'S-class',
+//				etc...
+//]
 ```

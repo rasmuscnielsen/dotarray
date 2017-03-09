@@ -22,8 +22,14 @@ class DotArrayAppendTest extends TestCase
             'bar' => 'bar'
         ]);
 
+        $dotArray->open('foobar')->add([
+            'foobar' => 'foobar'
+        ]);
+
         $this->assertArrayHasKey('foo', $dotArray->read('foobar'));
         $this->assertArrayHasKey('bar', $dotArray->read('foobar'));
+        $this->assertArrayHasKey('foobar', $dotArray->read('foobar'));
+        $this->assertEquals('foobar', $dotArray->read('foobar.foobar'));
     }
 
 

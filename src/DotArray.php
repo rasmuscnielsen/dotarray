@@ -52,6 +52,17 @@ class DotArray
         return new static($memory);
     }
 
+    /**
+     * Alias for init
+     *
+     * @param $source
+     * @return static
+     */
+    public static function tap(&$source)
+    {
+        return new static($source);
+    }
+
     /* __________________________________________________________________________________ */
 
     /**
@@ -85,26 +96,15 @@ class DotArray
 
 
     /**
-     * @param $dotPath
-     * @param bool $createIfNotExists
-     * @return $this
+     * Alias for read
+     *
+     * @param null $key
+     * @param null $default
+     * @return mixed
      */
-    protected function navigateTo($dotPath, $createIfNotExists=true)
+    public function get($key=null, $default=null)
     {
-        $paths = explode('.', $dotPath);
-
-        $dotArray = $this;
-
-        // Navigate through path
-        foreach($paths as $path)
-        {
-            $dotArray = $dotArray->open($path, $createIfNotExists);
-
-            // Null can be return if requested not to create property
-            if(is_null($dotArray)) { return null; }
-        }
-
-        return $dotArray;
+        return $this->read($key, $default);
     }
 
 
@@ -150,6 +150,19 @@ class DotArray
 
 
     /**
+     * Alias for write
+     *
+     * @param $key
+     * @param null $value
+     * @return null
+     */
+    public function put($key, $value=null)
+    {
+        return $this->write($key, $value);
+    }
+
+
+    /**
      * @param $key
      * @param null $value
      * @return null
@@ -159,7 +172,7 @@ class DotArray
         $array = &$this->pointer;
 
         // If only $key is passed, it is actually the value
-        if (count(func_get_args()) === 1) { return $array = $key; }
+        if ($value === null) { return $array = $key; }
 
         // Also the key can be null
         if (is_null($key)) { return $array = $value; }
@@ -176,10 +189,21 @@ class DotArray
      * @param null $value
      * @return null
      */
+    public function add($key, $value=null)
+    {
+        return $this->append($key, $value);
+    }
+
+
+    /**
+     * @param $key
+     * @param null $value
+     * @return null
+     */
     public function append($key, $value=null)
     {
         // Swap args if only one given
-        if(count(func_get_args()) === 1)
+        if($value === null)
         {
             $value = $key; $key = null;
         }
@@ -256,6 +280,30 @@ class DotArray
         $path = implode('.', $paths);
 
         return array($path, $property);
+    }
+
+
+    /**
+     * @param $dotPath
+     * @param bool $createIfNotExists
+     * @return $this
+     */
+    private function navigateTo($dotPath, $createIfNotExists=true)
+    {
+        $paths = explode('.', $dotPath);
+
+        $dotArray = $this;
+
+        // Navigate through path
+        foreach($paths as $path)
+        {
+            $dotArray = $dotArray->open($path, $createIfNotExists);
+
+            // Null can be return if requested not to create property
+            if(is_null($dotArray)) { return null; }
+        }
+
+        return $dotArray;
     }
 
 }

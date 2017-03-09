@@ -14,8 +14,10 @@ class DatastoreWriteTest extends TestCase
 
         $dotArray = DotArray::init($memory);
         $dotArray->write('foo', 'bar');
+        $dotArray->put('baz', 'bar');
 
         $this->assertEquals('bar', $dotArray->read('foo'));
+        $this->assertEquals('bar', $dotArray->read('baz'));
     }
 
 

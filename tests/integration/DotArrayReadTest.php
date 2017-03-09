@@ -15,6 +15,7 @@ class DotArrayReadTest extends TestCase
         $dotArray = DotArray::init($memory);
 
         $this->assertEquals('bar', $dotArray->read('foo'));
+        $this->assertEquals('bar', $dotArray->get('foo'));
     }
 
 
