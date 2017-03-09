@@ -36,7 +36,7 @@ $cars->add('mercedes', [
 $dotArray->put('garage.cars.mercedes.color', 'blueish');
 
 // or to delete
-$garage->open('mercedes')->delete('origin');
+$cars->open('mercedes')->delete('origin');
 ```
 
 Finally you can read out the values in a variety of ways
